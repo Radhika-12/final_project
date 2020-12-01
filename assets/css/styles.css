@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 * {
     margin: 0;
     padding: 0;
@@ -45,3 +46,23 @@
     margin: 1em 0;
   }
   
+||||||| 72c70cc
+=======
+main {
+    height: 125vh;
+}
+
+form {
+    margin-top: 70px;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.odd,
+.even {
+    display: flex;
+    align-items: baseline;
+}
+>>>>>>> master
