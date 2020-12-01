@@ -1,7 +1,3 @@
-main {
-    height: 125vh;
-}
-
 form {
     margin-top: 70px;
     border: 1px solid black;
@@ -14,4 +10,16 @@ form {
 .even {
     display: flex;
     align-items: baseline;
+}
+
+.card {
+    margin: 5px;
+    border: 1px solid black;
+    border-radius: 3px;
+    background-color: lightgray;
+}
+
+main {
+    margin-top: 5rem;
+    width: 100vw;
 }
