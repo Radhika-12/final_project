@@ -2,17 +2,29 @@
   
     
   body {
-        background-color: rgb(242, 247, 247)
-    
+        background-color: rgb(242, 247, 247);
+        height: 100vh;
   }
-  
+
+  main{
+    height:100%;
+  }
+
+  .row-top {
+    height: 100%;
+  }
+
+  .row-head {
+    margin-top:70px;
+  }
 
  .button {
     background-color: rgb(40, 40, 43);  
     border-radius: 5px;
     color: #ffff;
-        padding: .5em;
+        padding: .5rem;
     text-decoration: none;
+    margin: 1.5rem;
   }
   
   .button:focus,
@@ -20,17 +32,17 @@
     background-color: rgb(112, 112, 116);
     color:#ffff;
   }
-  
+
+  /* comment out VWS 
   .aligncentre {
     width: 150px;
     height: 100px;
-    /* Center vertically and horizontally */
+    /* Center vertically and horizontally 
     position: absolute;
     top: 50%;
     left: 50%;
   }
-  
-  /*.content {
+  .content {
     display: none;
     margin: 1em 0;
   }*/
