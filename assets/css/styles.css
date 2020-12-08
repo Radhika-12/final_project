@@ -1,6 +1,43 @@
+
+  
+    
+  body {
+        background-color: rgb(242, 247, 247)
+    
+  }
+  
+
+ .button {
+    background-color: rgb(40, 40, 43);  
+    border-radius: 5px;
+    color: #ffff;
+        padding: .5em;
+    text-decoration: none;
+  }
+  
+  .button:focus,
+  .button:hover {
+    background-color: rgb(112, 112, 116);
+    color:#ffff;
+  }
+  
+  .aligncentre {
+    width: 150px;
+    height: 100px;
+    /* Center vertically and horizontally */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+  }
+  
+  /*.content {
+    display: none;
+    margin: 1em 0;
+  }*/
+  
 form {
     margin-top: 70px;
-    border: 1px solid black;
+    border: 1px solid rgb(243, 235, 235);
     border-radius: 5px;
     padding: 10px;
     margin-bottom: 10px;
@@ -10,16 +47,7 @@ form {
 .even {
     display: flex;
     align-items: baseline;
-}
 
-.card {
-    margin: 5px;
-    border: 1px solid black;
-    border-radius: 3px;
-    background-color: lightgray;
-}
+    }
+  
 
-main {
-    margin-top: 5rem;
-    width: 100vw;
-}
