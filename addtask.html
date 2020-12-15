@@ -5,7 +5,7 @@
     Task: 2
     Author: Vineet W. Singh 
     Start Date: 30/11/2020
-    Date of last edit: 10/12/2020
+    Date of last edit: 15/12/2020
     Date of last review:
 -->
 
@@ -76,7 +76,7 @@
                             <div class="col-md-8">
                                 <div class="form-group form-inline">
                                     <label class="col-sm-4" for="teamNam">Task Name</label>
-                                    <input class="form-control col-sm-8" type="text" placeholder="Task Name" id="taskNam" name="taskNam" required/>
+                                    <input class="form-control col-sm-8" type="text" placeholder="Task Name" id="taskNam" name="taskNam" tabindex="2" required/>
                                     <div class="invalid-feedback" id="taskFeedback">
                                         Please provide a valid task name. This field can't be blank.
                                     </div>
@@ -90,8 +90,8 @@
                             <div class="col-md-8">
                                 <div class="form-group form-inline">
                                     <label class="col-sm-4" for="desc">Description</label>
-                                    <textarea class="form-control col-sm-8" rows="5" id="desc" name="desc" required></textarea>
-                                    <div class="invalid-feedback">
+                                    <textarea class="form-control col-sm-8" rows="5" id="desc" name="desc" tabindex="3" required></textarea>
+                                    <div class="invalid-feedback" id="descFeedback">
                                         Please provide a valid task description This field can't be blank.
                                     </div>
                                 </div>
@@ -104,8 +104,8 @@
                             <div class="col-md-8">
                                 <div class="form-group form-inline">
                                     <label class="col-sm-4" for="assignee">Assigned To</label>
-                                    <input class="form-control col-sm-8" type="text" placeholder="" id="assignee" name="assignee" required/>
-                                    <div class="invalid-feedback">
+                                    <input class="form-control col-sm-8" type="text" placeholder="" id="assignee" name="assignee" tabindex="4" required/>
+                                    <div class="invalid-feedback" id="asgnFeedback">
                                         Please provide a valid assignee name. This field can't be blank.
                                     </div>
                                 </div>
@@ -118,7 +118,7 @@
                             <div class="col-md-8">
                                 <div class="form-group form-inline" >
                                         <label class="col-sm-4" for="status">Status</label>
-                                        <select class="form-control col-sm-8" id="status" name="status" required>
+                                        <select class="form-control col-sm-8" id="status" name="status" tabindex="5">
                                             <option value="todo" selected>TODO</option>
                                             <option value="inProgress">IN PROGRESS</option>
                                             <option value="review">REVIEW</option>
@@ -134,9 +134,9 @@
                             <div class="col-md-8">
                                 <div class="form-group form-inline">
                                     <label class="col-sm-4" for="iDate">Due Date: </label>
-                                    <input class="form-control col-sm-8" type="date" id="dDate" name="dDate" value="" min="" required/>
+                                    <input class="form-control col-sm-8" type="date" id="dDate" name="dDate" value="" min="" tabindex="6" required/>
                                     <div class="invalid-feedback" id="invalidDateMsg">
-                                        Please enter a valid date. Date can't be in the past. 
+                                        Please enter a valid date. Date can't be blank or in the past. 
                                     </div>
                                 </div>
                             </div>
@@ -145,10 +145,10 @@
                          <!-- Seventh controls  / buttons -->
                         <div class="form-row" id="taskFormRow8 ">
                             <div class="col-md-6 d-flex justify-content-center">
-                                <button type="submit " name="submit ">Submit</button>
+                                <button type="submit " name="submit" tabindex="7">Submit</button>
                             </div>
                             <div class="col-md-6 d-flex justify-content-center ">
-                                <button type="reset" name="reset ">Reset</button>
+                                <button type="reset" name="reset" tabindex="8">Reset</button>
                             </div>
                         </div>
                     </form>

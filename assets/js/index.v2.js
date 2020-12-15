@@ -5,7 +5,7 @@
     Task: 4
     Author: Vineet W. Singh 
     Start Date: 10/12/2020
-    Date of last edit: 10/12/2020
+    Date of last edit: 15/12/2020
     Date of last review:
 */
 
@@ -23,9 +23,14 @@ function main(){
     //add event listener
     form.addEventListener('submit', event => {
         /*check value of date field if it is blank or in the past - raise error
-        console.log(dateFld.value);
-        if (dateFld.value==="" || Date(dateFld.value) < Date()) {
+        const todayDt = new Date();
+        // check if date is blank after triming, if so return null
+        const valueDt = dateFld.value.trim() ? new Date(dateFld.value) : null;
+        // check if date is blank or in the past...
+        if (valueDt==null || valueDt < todayDt) {
+            // add invalid class to date input
             dateFld.classList.add("is-invalid");
+            //check if error message is visible or not, if not add class to make it visible
             if (!isVisible(document.getElementById("invalidDateMsg"))){
                 document.getElementById("invalidDateMsg").classList.add("d-block");
             }
