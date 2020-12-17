@@ -7,41 +7,42 @@
     Start Date: 30/11/2020
     Date of last edit: 17/12/2020
     Date of last review:
-*/  
-  
-  body {
-        background-color: rgb(242, 247, 247);
-        height: 100vh;
-  }
+*/
 
-  main{
-    height:100%;
-  }
+body {
+    background-color: rgb(242, 247, 247);
+    height: 100vh;
+}
 
-  .row-top {
+main {
     height: 100%;
-  }
+}
 
-  .row-head {
-    margin-top:70px;
-  }
+.row-top {
+    height: 100%;
+}
 
- .button {
-    background-color: rgb(40, 40, 43);  
+.row-head {
+    margin-top: 70px;
+}
+
+.button {
+    background-color: rgb(40, 40, 43);
     border-radius: 5px;
     color: #ffff;
-        padding: .5rem;
+    padding: .5rem;
     text-decoration: none;
     margin: 1.5rem;
-  }
-  
-  .button:focus,
-  .button:hover {
-    background-color: rgb(112, 112, 116);
-    color:#ffff;
-  }
+}
 
-  /* comment out VWS 
+.button:focus,
+.button:hover {
+    background-color: rgb(112, 112, 116);
+    color: #ffff;
+}
+
+
+/* comment out VWS 
   .aligncentre {
     width: 150px;
     height: 100px;
@@ -54,7 +55,7 @@
     display: none;
     margin: 1em 0;
   }*/
-  
+
 form {
     margin-top: 70px;
     border: 1px solid rgb(243, 235, 235);
@@ -63,16 +64,20 @@ form {
     margin-bottom: 10px;
 }
 
-
 #mainrow {
-  height:80%;
+    height: 75%;
 }
 
 .scrl-y {
-  display: block;
-  height: 50vh;
-  overflow: auto;
+    display: block;
+    height: 50vh;
+    overflow: auto;
 }
+
+.task-card {
+    width: 18rem;
+}
+
 
 /* scroll bar example 
 .my-custom-scrollbar {
