@@ -1,25 +1,86 @@
+/* 
+    JWD Web Developer Program 
+    Project: Final Project
+    Sprint: 2
+    Task: 6
+    Author: Vineet W. Singh 
+    Start Date: 30/11/2020
+    Date of last edit: 17/12/2020
+    Date of last review:
+*/  
+  
+  body {
+        background-color: rgb(242, 247, 247);
+        height: 100vh;
+  }
+
+  main{
+    height:100%;
+  }
+
+  .row-top {
+    height: 100%;
+  }
+
+  .row-head {
+    margin-top:70px;
+  }
+
+ .button {
+    background-color: rgb(40, 40, 43);  
+    border-radius: 5px;
+    color: #ffff;
+        padding: .5rem;
+    text-decoration: none;
+    margin: 1.5rem;
+  }
+  
+  .button:focus,
+  .button:hover {
+    background-color: rgb(112, 112, 116);
+    color:#ffff;
+  }
+
+  /* comment out VWS 
+  .aligncentre {
+    width: 150px;
+    height: 100px;
+    /* Center vertically and horizontally 
+    position: absolute;
+    top: 50%;
+    left: 50%;
+  }
+  .content {
+    display: none;
+    margin: 1em 0;
+  }*/
+  
 form {
     margin-top: 70px;
-    border: 1px solid black;
+    border: 1px solid rgb(243, 235, 235);
     border-radius: 5px;
     padding: 10px;
     margin-bottom: 10px;
 }
 
-.odd,
-.even {
-    display: flex;
-    align-items: baseline;
+
+#mainrow {
+  height:80%;
 }
 
-.card {
-    margin: 5px;
-    border: 1px solid black;
-    border-radius: 3px;
-    background-color: lightgray;
+.scrl-y {
+  display: block;
+  height: 50vh;
+  overflow: auto;
 }
 
-main {
-    margin-top: 5rem;
-    width: 100vw;
-}
+/* scroll bar example 
+.my-custom-scrollbar {
+  position: relative;
+  height: 50vh;
+  overflow: auto;
+  }
+
+  .table-wrapper-scroll-y {
+  display: block;
+  } */
