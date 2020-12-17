@@ -2,7 +2,7 @@
     JWD Web Developer Program 
     Project: Final Project
     Sprint: 2
-    Task: 5
+    Task: 6
     Author: Vineet W. Singh 
     Start Date: 16/12/2020
     Date of last edit: 17/12/2020
@@ -20,7 +20,7 @@ class Task {
         this._status=status;
         this._dueDate=dueDate;
     }
-
+    //setters
     set id(pId){
         this._id=pId;
     }
@@ -28,7 +28,7 @@ class Task {
     set status(pStatus) {
         this._status=pStatus;
     }
-
+    //getters
     get id() {return(this._id);}
 
     get projectName() {return(this._projectName);}
@@ -42,10 +42,13 @@ class Task {
     get status() {return(this._status);}
 
     get dueDate() {return(this._dueDate);}
+
+    get allData(){
+        return([this._id,this._projectName,this._taskName,this._desc,this._assignee,this._status,this._dueDate]);
+    }
 }
 
-// return the store object, initially store object will not have any existing data. 
-// later on this data can be restored from localStorage on page load
+// Taskmanager is the class used to store the taskList array
 class TaskManager{ 
     constructor(){
             // last Id 
