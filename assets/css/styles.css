@@ -1,6 +1,14 @@
-
+/* 
+    JWD Web Developer Program 
+    Project: Final Project
+    Sprint: 2
+    Task: 6
+    Author: Vineet W. Singh 
+    Start Date: 30/11/2020
+    Date of last edit: 17/12/2020
+    Date of last review:
+*/  
   
-    
   body {
         background-color: rgb(242, 247, 247);
         height: 100vh;
@@ -55,10 +63,24 @@ form {
     margin-bottom: 10px;
 }
 
-.odd,
-.even {
-    display: flex;
-    align-items: center;
-    }
-  
 
+#mainrow {
+  height:90%;
+}
+
+.scrl-y {
+  display: block;
+  height: 50vh;
+  overflow: auto;
+}
+
+/* scroll bar example 
+.my-custom-scrollbar {
+  position: relative;
+  height: 50vh;
+  overflow: auto;
+  }
+
+  .table-wrapper-scroll-y {
+  display: block;
+  } */
