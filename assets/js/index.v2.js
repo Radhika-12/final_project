@@ -9,6 +9,10 @@
     Date of last review:
 */
 
+ //store that acts as a task manager.
+ const store = new TaskManager();
+ store.restoreData();
+
 //main function for the page
 
 function main(){
@@ -21,6 +25,8 @@ function main(){
     const dateFld =  document.getElementById("dDate");
     dateFld.setAttribute("min", cDate);
     dateFld.setAttribute("value", cDate);
+
+    if (store.taskList.length!=0) renderTask();
 
     //add event listeners, submit & reset
     form.addEventListener('submit', event => {
@@ -75,16 +81,16 @@ function renderTask(){
             // create a new table row
             const tbRow=document.createElement("TR");
             // get all data values from task and add it to a row
-            ele.allData.forEach(ele=>{
+            for (prop in ele.allData){
                 //create a new table row data field - task name
                 const tbCell=document.createElement("TD");
                 //add a text node with contents
-                const tbCellCnt=document.createTextNode(ele);
+                const tbCellCnt=document.createTextNode(ele.allData[prop]);
                 //add text node to table data field
                 tbCell.appendChild(tbCellCnt);
                 //add data field to table row
                 tbRow.appendChild(tbCell);
-            });
+            }
             // //add the row to the body
             taskTableBody.appendChild(tbRow);
             if (isVisible(document.querySelector("#noDataLine"))){

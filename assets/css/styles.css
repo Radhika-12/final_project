@@ -74,8 +74,10 @@ form {
     overflow: auto;
 }
 
-.task-card {
-    width: 18rem;
+.card {
+    width: 22rem;
+    margin:1rem;
+
 }
 
 

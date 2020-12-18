@@ -44,7 +44,14 @@ class Task {
     get dueDate() {return(this._dueDate);}
 
     get allData(){
-        return([this._id,this._projectName,this._taskName,this._desc,this._assignee,this._status,this._dueDate]);
+        return({"ID": this._id,
+                "Project":this._projectName,
+                "Task":this._taskName,
+                "Desc":this._desc,
+                "Assignee":this._assignee,
+                "Status":this._status,
+                "Due Date":this._dueDate
+        });
     }
 }
 
@@ -62,6 +69,10 @@ class TaskManager{
         return(this._taskList);
     }
 
+    getTaskById(pId){
+        return(this._taskList[this._taskList.findIndex(ele=>ele.id===pId)]);
+    }
+
     //add a new task to the task list
     addTask(projectName, taskName, desc, assignee, status, dueDate){
         const vTask = new Task(projectName, taskName, desc, assignee, status, dueDate);
@@ -71,7 +82,7 @@ class TaskManager{
     }
 
     //modify the status in a task
-    modifyTask(pId,pStatus){
+    modifyTaskStatus(pId,pStatus){
         // get the right node
         const vTask=this._taskList[this._taskList.findIndex(ele=>ele.id===pId)];
         //modify status by calling setter;
@@ -88,11 +99,52 @@ class TaskManager{
     persistData(){}
 
     //restore from local storage
-    restoreData(){}
+    restoreData(){
+        const data = [{"ID": 1,
+            "Project":"Final Project",
+            "Task":"Make a wireframe",
+            "Desc":"Start the project by making a wireframe",
+            "Assignee":"Radhika",
+            "Status":"done",
+            "Due Date":"2020-11-12"
+            },
+            {"ID": 2,
+            "Project":"Final Project",
+            "Task":"Make index.html",
+            "Desc":"Start implementing the project by coding html files",
+            "Assignee":"Radhika",
+            "Status":"done",
+            "Due Date":"2020-11-30"
+            },
+            {"ID": 3,
+            "Project":"Final Project",
+            "Task":"Make index.js",
+            "Desc":"write javascript to validate form",
+            "Assignee":"Vineet",
+            "Status":"done",
+            "Due Date":"2020-12-10"
+            },
+            {"ID": 4,
+            "Project":"Final Project",
+            "Task":"Make taskManager class",
+            "Desc":"Make task objects that can be manipulated by Task class",
+            "Assignee":"Vineet",
+            "Status":"in progress",
+            "Due Date":"2020-12-18"
+            }, 
+            {"ID": 5,
+            "Project":"Final Project",
+            "Task":"Manage tasks",
+            "Desc":"Make changes to the tasks be reflected in the stored data",
+            "Assignee":"Vineet",
+            "Status":"to do",
+            "Due Date":"2020-12-18"
+            }
+        ];
+        data.forEach(ele=>this.addTask(ele["Project"], ele["Task"],ele["Desc"],ele["Assignee"],ele["Status"],ele["Due Date"]));
+    }
 }
 
- //store that acts as a task manager.
-const store = new TaskManager();
 
 
 
