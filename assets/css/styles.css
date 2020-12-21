@@ -41,6 +41,10 @@ main {
     color: #ffff;
 }
 
+.table-hover tbody tr:hover td{
+    background-color: aqua;
+}
+
 
 /* comment out VWS 
   .aligncentre {
