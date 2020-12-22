@@ -47,22 +47,18 @@
     <main>
         <div class="container-fluid">
             <div class="row d-flex align-items-center" id="mainRow">
-               
-                <div class="d-none d-lg-block col-lg-1"></div>
-                <div class="col-md-6 col-lg-5" id="formDiv">
-                    
-                    <div id="taskModal" class="modal fade" tabindex="-1" role="dialog" 
+                <div id="taskModal" class="modal fade" tabindex="-1" role="dialog" 
                         aria-labelledby="taskModal" aria-hidden="true">
                         <div class="modal-dialog"> 
-                           
                             <!-- Modal Contents -->
                             <div class="modal-content">
                                 <!-- the .setContent() method will update this element's HTML -->
                             </div>
-                          
                         </div>
                     </div>
-
+                <!-- Form Begins-->
+                <div class="d-none d-md-block col-md-2"></div>
+                <div class="col-md-8" id="formDiv">
                     <form id="taskForm" class="needs-validation" novalidate>
                         <!--Form Heading Row-->
                         <div id="taskFormHeader" class="form-group">
@@ -163,53 +159,32 @@
                          <!-- Seventh controls  / buttons -->
                         <div class="form-row" id="taskFormRow8 ">
                             <div class="col-md-6 d-flex justify-content-center">
-                                <button type="submit " name="submitButton" tabindex="7">Submit</button>
+                                <button type="submit" class="btn btn-primary" name="submitButton" tabindex="7">Submit</button>
                             </div>
                             <div class="col-md-6 d-flex justify-content-center ">
-                                <button type="reset" name="resetButton" tabindex="8">Reset</button>
+                                <button type="reset" class="btn btn-warning" name="resetButton" tabindex="8">Reset</button>
                             </div>
                         </div>
                     </form>
                 </div>
-                <div class="col-md-6 col-lg-5">
+                <div class="d-none d-md-block col-md-2"></div>
+            </div>
+            <div class="row">
+                <div class="d-none d-md-block col-md-1"></div>
+                <div class="col-md-10" id="taskTbCol">
                     <h3 class="text-center"> Task List</h3>
-                    <hr />
                     <h5 id="noDataLine"> No Data to display</h5>
-                    <div class="table-responsive scrl-y" id="taskTbDiv" >
+                    <div class="table-responsive scrl-y" id="taskTbDiv">
                         <Table class="table table-striped table-bordered table-hover d-none" id="taskTable">
-                            <thead>
-                                <tr>
-                                    <th>
-                                        ID
-                                    </th>
-                                    <th>
-                                        Project
-                                    </th>
-                                    <th>
-                                        Task
-                                    </th>
-                                    <th>
-                                        Description
-                                    </th>
-                                    <th>
-                                        Assigned To
-                                    </th>
-                                    <th>
-                                        Status
-                                    </th>
-                                    <th>
-                                        Due Date
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody id="taskTableBody">
-                            </tbody>
+                            <thead id="taskTableHead"></thead>
+                            <tbody id="taskTableBody"></tbody>
                         </Table>
                     </div>
                 </div>
-                <div class="d-none d-lg-block col-lg-1"></div>
-            </div>
+                <div class="d-none d-md-block col-md-1"></div>
+            </div> 
         </div>
+        <div class="row"></div>
     </main>
     <footer>
 

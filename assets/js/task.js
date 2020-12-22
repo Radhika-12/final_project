@@ -20,6 +20,8 @@ class Task {
         this._status=status;
         this._dueDate=dueDate;
     }
+
+    static fieldNames = ["ID","Project","Task","Desc","Assignee","Status","Due Date"];
     //setters
     set id(pId){
         this._id=pId;
@@ -53,6 +55,9 @@ class Task {
                 "Due Date":this._dueDate
         });
     }
+
+   
+
 }
 
 // Taskmanager is the class used to store the taskList array
@@ -68,6 +73,8 @@ class TaskManager{
     get taskList() {
         return(this._taskList);
     }
+
+    getTaskHeaders() {return(Task.fieldNames);}
 
     getTaskById(pId){
         return(this._taskList[this._taskList.findIndex(ele=>ele.id===pId)]);

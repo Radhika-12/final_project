@@ -59,7 +59,7 @@ function main(){
         form.classList.remove("was-validated");
         form.reset();
     });
-};
+}
 
 /* check if an element is visible on a page */
 function isVisible (ele) {
@@ -73,6 +73,15 @@ function isVisible (ele) {
 
 //display task added to list after it is added
 function renderTask(){
+    //prepare & display tabble head row
+    const taskTableHead=document.querySelector("#taskTableHead");
+    const taskTblHdRw=document.createElement("TR");
+    //prepare the th row
+    const taskTblHdCnt = store.getTaskHeaders().map(ele=>`<th> ${ele} </th>`).join(' ');
+    //display
+    taskTblHdRw.insertAdjacentHTML("afterbegin",taskTblHdCnt);
+    taskTableHead.appendChild(taskTblHdRw);
+
     //get task table body
     const taskTableBody=document.querySelector("#taskTableBody");
     //delete existing display of data in the table
@@ -80,6 +89,8 @@ function renderTask(){
     if (taskTableBody!=null){
         while(taskTableBody.hasChildNodes()) 
             taskTableBody.removeChild(taskTableBody.firstChild);
+    }
+    if (store.taskList.length>0){
         //run a Array.forEach here to process each element in the task list
         store.taskList.forEach(ele=>{
             // create a new table row
@@ -113,7 +124,7 @@ function initModal(){
      const modalContHeader = 
      `<!-- Modal Header -->
      <div class="modal-header">
-         <h4 class="modal-title">Modal Heading</h4>
+         <h4 class="modal-title">Modify Task</h4>
          <button type="button" class="close" data-dismiss="modal">&times;</button>
      </div>`;
      let modalContBody = 
@@ -143,22 +154,22 @@ function initModal(){
         const cTask = store.getTaskById(id);
         const preButtonBody=`<!-- Modal Body -->
         <div class="modal-body">
-            <div class="text-center">
+            <div>
                 <h4> Task ID: ${cTask.id} </h4>
                 <hr/>
-                <p> Task: ${cTask.taskName} </p>
-                <p> Assigned to: ${cTask.assignee} </p>
-                <p> Status: ${cTask.status} </p>`;
+                <p> <strong>Task: </strong> ${cTask.taskName} </p>
+                <p> <strong>Assigned to: </strong>${cTask.assignee} </p>
+                <p> <strong>Status: </strong>${cTask.status} </p>`;
         const postButtonBody=`<hr /> 
-                <p> To delete the task go to the Manage Tasks Page </p> 
+                <p> To modify status or delete the task go to the Manage Tasks Page </p> 
             </div>
         </div>`;
-        modalContBody = cTask.status==="done" ? 
-            preButtonBody
-            + `<button type='button' class='btn btn-primary modalBtn' id='${cTask.id}' disabled> Mark as Done </button>`
-            + postButtonBody :
+        modalContBody = cTask.status!=="done" ? 
             preButtonBody
             + `<button type='button' class='btn btn-primary modalBtn' id='${cTask.id}'> Mark as Done </button>`
+            + postButtonBody :
+            preButtonBody 
+            + `<button type='button' class='btn btn-primary modalBtn d-none' id='${cTask.id}'> Mark as Done </button>`
             + postButtonBody ;
         const modalCont=modalContHeader+modalContBody+modalContFooter;
         taskModalInstance.setContent(modalCont);

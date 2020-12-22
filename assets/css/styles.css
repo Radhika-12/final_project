@@ -11,7 +11,6 @@
 
 body {
     background-color: rgb(242, 247, 247);
-    height: 100vh;
 }
 
 main {
@@ -61,21 +60,16 @@ main {
   }*/
 
 form {
-    margin-top: 70px;
-    border: 1px solid rgb(243, 235, 235);
+    margin-top: 4rem;
+    border: 1px solid darkgrey;
     border-radius: 5px;
-    padding: 10px;
-    margin-bottom: 10px;
-}
-
-#mainrow {
-    height: 75%;
+    padding: 1rempx;
+    margin-bottom: 1rempx;
 }
 
 .scrl-y {
     display: block;
-    height: 50vh;
-    overflow: auto;
+    overflow-y: auto;
 }
 
 .card {
@@ -84,6 +78,19 @@ form {
 
 }
 
+.btn{
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+#taskTbCol{
+    margin:1rem;
+    border: 1px solid darkgrey;
+}
+
+#taskTbDiv{
+    height:80%;
+}
 
 /* scroll bar example 
 .my-custom-scrollbar {
