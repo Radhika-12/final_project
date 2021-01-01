@@ -5,10 +5,46 @@ store.restoreData();
 
 function main() {
     renderCards();
-    //set up event listeners
-}
+    let taskChange=false;
+    let vStatus;
+   //set up event listener on the select 
+    document.querySelectorAll(".task-card").forEach(ele=>{
+        //for each card setup an event listeners on select and delete buttons
+        const cardBtn = ele.querySelector('.delBtn');
+        cardBtn.addEventListener("click",eve=>{
+            console.log("removing card");
+            console.log(cardBtn.getAttribute("id").split('_')[1]);
+            //get the id 
+            let vId=Number(cardBtn.getAttribute("id").split('_')[1]);
+            store.deleteTask(vId);
+            renderCards();
+        });
+        const cardSel = ele.querySelector('.cardSelect');
+        cardSel.addEventListener("change",eve=>{
+            console.log("changing status");
+            console.log(cardSel.getAttribute("id"));
+            let vId=Number(cardSel.getAttribute("id").split('_')[1]);
+            store.modifyTaskStatus(vId,cardSel.value);
+            if (cardSel.value==="done") {
+                ele.querySelector(`#btn_${vId}`).removeAttribute("disabled");
+            }
+            else {
+                ele.querySelector(`#btn_${vId}`).setAttribute("disabled","");
+            }
+        });
+    });
+} 
+
 
 function renderCards() {
+    //prepare & display card row
+    const taskCardRow=document.querySelector("#cardRow");
+    //delete existing cards
+    //check if row has any cards - if so delete all of them
+    if (taskCardRow!=null){
+        while(taskCardRow.hasChildNodes()) 
+            taskCardRow.removeChild(taskCardRow.firstChild);
+    }
     const cardRow = document.querySelector("#cardRow");
     //for each task make a card and display it
     let ctr=0;
@@ -62,8 +98,9 @@ function renderCards() {
             if (prop==="Status"){
                 //add a drop down select list as an element 
                 cardPropRowCol2El=document.createElement("SELECT");
-                cardPropRowCol2El.setAttribute("id",prop+vId);
-                cardPropRowCol2El.setAttribute("name",prop+vId);
+                cardPropRowCol2El.setAttribute("id",prop+'_'+vId);
+                cardPropRowCol2El.setAttribute("name",prop+'_'+vId);
+                cardPropRowCol2El.classList.add("cardSelect");
                 const options=["to do","in progress","review","done"];
                 options.forEach(el2=>{
                     //make an option element for each option and add it to the select
@@ -73,7 +110,6 @@ function renderCards() {
                     cardPropRowCol2ElOpt.appendChild(cardPropRowCol2ElOptCt);
                     cardPropRowCol2El.appendChild(cardPropRowCol2ElOpt);
                 });
-                console.log(ele.allData[prop]);
                 cardPropRowCol2El.value=ele.allData[prop];
             } else{
                 cardPropRowCol2El=document.createElement("P");
@@ -93,6 +129,27 @@ function renderCards() {
 
         }
         // add a delete button to the body
+        const cardDelRow=document.createElement("DIV");
+        cardDelRow.classList.add("row");
+        //make a col for the row
+        const cardDelRowCol=document.createElement("DIV");
+        cardDelRowCol.classList.add("col-12","d-flex","justify-content-center");
+        // make a delete button for the col
+        const cardDelRowColBtn=document.createElement("BUTTON");
+        cardDelRowColBtn.classList.add("btn","btn-danger","delBtn");
+        cardDelRowColBtn.setAttribute("id",`btn_${vId}`);
+        if (ele.allData["Status"]!== "done"){
+            cardDelRowColBtn.setAttribute("disabled","");
+        }
+        //add text to button
+        const  cardDelRowColBtnLbl=document.createTextNode("Delete Task");
+        cardDelRowColBtn.appendChild(cardDelRowColBtnLbl);
+        //add button to column
+        cardDelRowCol.appendChild(cardDelRowColBtn);
+        //add column to row
+        cardDelRow.appendChild(cardDelRowCol);
+        //add row to card body
+        cardBody.appendChild( cardDelRow);
         // add the card body to the card
         card.appendChild(cardBody);
         cardCol.appendChild(card);
