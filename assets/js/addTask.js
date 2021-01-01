@@ -11,6 +11,7 @@
 
  //store that acts as a task manager.
  const store = new TaskManager();
+ let renderOnce=false;
  store.restoreData();
 
 //main function for the page
@@ -75,6 +76,12 @@ function isVisible (ele) {
 function renderTask(){
     //prepare & display tabble head row
     const taskTableHead=document.querySelector("#taskTableHead");
+    //delete existing table header
+    //check if task table body contains any rows - if so delete all of them
+    if (taskTableHead!=null){
+        while(taskTableHead.hasChildNodes()) 
+            taskTableHead.removeChild(taskTableHead.firstChild);
+    }
     const taskTblHdRw=document.createElement("TR");
     //prepare the th row
     const taskTblHdCnt = store.getTaskHeaders().map(ele=>`<th> ${ele} </th>`).join(' ');
@@ -175,7 +182,7 @@ function initModal(){
         taskModalInstance.setContent(modalCont);
     }; //end updateModalBody function 
     // add an event listener for double clicks on the list of tasks
-    document.querySelector("#taskTable").addEventListener("dblclick",event=>
+    document.querySelector("#taskTable").addEventListener("click",event=>
     {     
         const element = event.target.closest('.taskTableRow'); 
         const id = Number(element.getAttribute("id"));

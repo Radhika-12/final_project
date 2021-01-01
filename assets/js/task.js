@@ -55,9 +55,6 @@ class Task {
                 "Due Date":this._dueDate
         });
     }
-
-   
-
 }
 
 // Taskmanager is the class used to store the taskList array
