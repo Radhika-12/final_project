@@ -1,37 +1,54 @@
 /* 
     JWD Web Developer Program 
     Project: Final Project
-    Sprint: 2
-    Task: 6
+    Sprint: 4
+    Task: 9
     Author: Vineet W. Singh 
     Start Date: 10/12/2020
-    Date of last edit: 21/12/2020
+    Date of last edit: 13/1/2021
     Date of last review:
 */
 
  //store that acts as a task manager.
- const store = new TaskManager();
- let renderOnce=false;
- store.restoreData();
+const store = new TaskManager();
+const session={};
+store.restoreData("localStorage");
+session.taskModified=false;
+
+//windwo event listeners
+// when window loses focus - store data 
+window.addEventListener('blur',(ev)=>{
+    store.persistData();
+});
+
+//when window gains focus - restore data from local storage & do status check
+window.addEventListener('focus',(ev)=>{
+    store.restoreData("localStorage");
+    renderTask();
+});
+
+//check status every quater second
+window.setInterval(statusCheck,250);
 
 //main function for the page
-
 function main(){
     //format a new date for the date field. 
     const cDt = new Date();
-    const cDate = `${cDt.getFullYear()}-${cDt.getMonth()+1}-${cDt.getDate()}`;
-     //get form
+    const cMnth=cDt.getMonth()+1;
+    const cMonth=cMnth<10?"0"+cMnth.toString():cMnth.toString();
+    const cDate=`${cDt.getFullYear()}-${cMonth}-${cDt.getDate()}`;
+
+    //get form
      const form = document.getElementById("taskForm");
-    //set date attributes
-    const dateFld =  document.getElementById("dDate");
+
+     //set date attributes
+    const dateFld =  document.querySelector("#dDate");
+    dateFld.setAttribute("value",cDate);
     dateFld.setAttribute("min", cDate);
-    dateFld.setAttribute("value", cDate);
-    // if list of tasks is not empty render list of tasks on screen and set up 
-    // modal that allows modification
-    if (store.taskList.length!=0){
-        renderTask();
-        initModal();
-    }
+
+    //render task table
+    renderTask();
+
     //add event listeners, submit & reset
     form.addEventListener('submit', event => {
         event.preventDefault();
@@ -39,7 +56,6 @@ function main(){
         // check if any form-controls have form-control:invalid class, stop if true
         // otherwise add the task to the store.taskList and render on screen.
         if (form.checkValidity()){
-            const listLength=store.taskList.length;
             //no invalid controls detected - continue:
             const projectName = document.querySelector("#projNam").value;
             const taskName = document.querySelector("#taskNam").value;
@@ -48,11 +64,9 @@ function main(){
             const status = document.querySelector("#status").value; 
             const dueDate = document.querySelector("#dDate").value;
             store.addTask(projectName, taskName, desc, assignee, status, dueDate);
-            //check if task list is empty before adding a task and initModal only once
-            if (listLength===0) initModal();
             form.classList.remove("was-validated");
-            renderTask(form);
             form.reset();
+            session.taskModified=true;
         }
     });
     //reset form when button is pressed
@@ -60,6 +74,8 @@ function main(){
         form.classList.remove("was-validated");
         form.reset();
     });
+
+
 }
 
 /* check if an element is visible on a page */
@@ -72,23 +88,23 @@ function isVisible (ele) {
     style.visibility!== 'hidden');
 }
 
+ //check status of tasks - if changed renderTasks afresh
+ function statusCheck() {
+    //check if any of the two pages have modified the task in any form 
+    //get from localStorage status of pages: 
+    if (session.taskModified){
+        //something has chaned on the page - renderTasks afresh
+        renderTask();
+        session.taskModified=false;
+        //persist data to local storage and mark as changed
+        store.persistData();
+    }
+}
+
 //display task added to list after it is added
 function renderTask(){
-    //prepare & display tabble head row
-    const taskTableHead=document.querySelector("#taskTableHead");
-    //delete existing table header
-    //check if task table body contains any rows - if so delete all of them
-    if (taskTableHead!=null){
-        while(taskTableHead.hasChildNodes()) 
-            taskTableHead.removeChild(taskTableHead.firstChild);
-    }
-    const taskTblHdRw=document.createElement("TR");
-    //prepare the th row
-    const taskTblHdCnt = store.getTaskHeaders().map(ele=>`<th> ${ele} </th>`).join(' ');
-    //display
-    taskTblHdRw.insertAdjacentHTML("afterbegin",taskTblHdCnt);
-    taskTableHead.appendChild(taskTblHdRw);
-
+    //reset TaskTable
+    resetTable();
     //get task table body
     const taskTableBody=document.querySelector("#taskTableBody");
     //delete existing display of data in the table
@@ -97,7 +113,7 @@ function renderTask(){
         while(taskTableBody.hasChildNodes()) 
             taskTableBody.removeChild(taskTableBody.firstChild);
     }
-    if (store.taskList.length>0){
+    if (store.getNoOfTasks()>0){
         //run a Array.forEach here to process each element in the task list
         store.taskList.forEach(ele=>{
             // create a new table row
@@ -122,43 +138,64 @@ function renderTask(){
                 document.querySelector("#taskTable").classList.remove("d-none");
             }
         });
+    initModal();
     }
+    // no of tasks in tasklist is 0
+    else if (isVisible(document.querySelector("#taskTable"))){
+            document.querySelector("#noDataLine").classList.remove("d-none");
+            document.querySelector("#taskTable").classList.add("d-none");
+        }
 }
 
 // function to initialise a modal which will allow a task to be modified
-function initModal(){
-     //constants used for modal 
-     const modalContHeader = 
-     `<!-- Modal Header -->
-     <div class="modal-header">
-         <h4 class="modal-title">Modify Task</h4>
-         <button type="button" class="close" data-dismiss="modal">&times;</button>
-     </div>`;
-     let modalContBody = 
-     `<!-- Modal Body -->
-     <div class="modal-body">
-     </div>`;
-     const modalContFooter = 
-     `<!-- Modal Footer -->
-     <div class="modal-footer">
-         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-     </div>`;
-     // make a constant with modal contents
-    const modalCont=modalContHeader+modalContBody+modalContFooter;
+const initModal=()=>{
+    //check if modal body exists - if so delete it 
+    if (document.querySelector(".modal-header")!=null){
+        const modalBody = document.querySelector(".modal-header").parentElement;
+        modalBody.removeChild(document.querySelector(".modal-header"));
+        modalBody.removeChild(document.querySelector(".modal-body"));
+        modalBody.removeChild(document.querySelector(".modal-footer"));
+        document.querySelector("#taskTable").removeEventListener("click",tableClickHandler);
+    }
+     // add an event listener for double clicks on the list of tasks
+     document.querySelector("#taskTable").addEventListener("click",tableClickHandler);
+}//end initModal()
+     
+    //function: handler for double click events on the table row
+function tableClickHandler(event){     
+    const element = event.target.closest('.taskTableRow'); 
+    const id = Number(element.getAttribute("id"));
+
+    // make a constant with modal contents
+    //const modalCont=modalContHeader+modalContBody+modalContFooter;
     // initialize on a <div class="modal"> with all options
     // Note: options object is optional
     const taskModalInstance = new BSN.Modal(
-        '#taskModal', 
         // target selector
-        { // options object
-        content: modalCont, // sets modal content
+        '#taskModal', 
+        // options object
+        { 
+        content: "", // sets modal content
         backdrop: 'static', // we don't want to dismiss Modal when Modal or backdrop is the click event target
         keyboard: false // we don't want to dismiss Modal on pressing Esc key
         }
     ); //end taskModalInstance
-    //update modal body with task details and set up a "mark as done" button
+
+    //sub-function: update modal body with task details and set up a "mark as done" button
     const updateModalBody = id => {
         const cTask = store.getTaskById(id);
+        //variables and constants used for modal 
+        const modalContHeader = 
+        `<!-- Modal Header -->
+        <div class="modal-header">
+            <h4 class="modal-title">Modify Task</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>`;
+        const modalContFooter = 
+        `<!-- Modal Footer -->
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>`;
         const preButtonBody=`<!-- Modal Body -->
         <div class="modal-body">
             <div>
@@ -171,39 +208,52 @@ function initModal(){
                 <p> To modify status or delete the task go to the Manage Tasks Page </p> 
             </div>
         </div>`;
-        modalContBody = cTask.status!=="done" ? 
-            preButtonBody
-            + `<button type='button' class='btn btn-primary modalBtn' id='${cTask.id}'> Mark as Done </button>`
-            + postButtonBody :
-            preButtonBody 
-            + `<button type='button' class='btn btn-primary modalBtn d-none' id='${cTask.id}'> Mark as Done </button>`
-            + postButtonBody ;
+        const modalContBody = cTask.status!=="done" ? 
+                preButtonBody
+                + `<button type='button' class='btn btn-primary modalBtn' id='${cTask.id}'> Mark as Done </button>`
+                + postButtonBody :
+                preButtonBody 
+                + `<button type='button' class='btn btn-primary modalBtn d-none' id='${cTask.id}'> Mark as Done </button>`
+                + postButtonBody ;
         const modalCont=modalContHeader+modalContBody+modalContFooter;
         taskModalInstance.setContent(modalCont);
-    }; //end updateModalBody function 
-    // add an event listener for double clicks on the list of tasks
-    document.querySelector("#taskTable").addEventListener("click",event=>
-    {     
-        const element = event.target.closest('.taskTableRow'); 
-        const id = Number(element.getAttribute("id"));
-        updateModalBody(id);
-        //add an event listener for the modal 'mark as done' button
-        document.querySelector(".modalBtn").addEventListener("click",event=>{
-            const element = event.target;
-            const id2 = Number(element.getAttribute("id"));
-            //modify task status in store
-            store.modifyTaskStatus(id2,"done");
-            // disable the 'mark as done' button
-            element.setAttribute("disabled","");
-            //toggle off the modal
-            taskModalInstance.toggle();
-            //refresh the task list to re-render the list on page
-            this.renderTask();
-        });//end event listener for the modal 'mark as done' button
-        //turn on the modal 
+    }; //end sub-function --- updateModalBody 
+
+    updateModalBody(id);
+    //add an event listener -- for the modal 'mark as done' button
+    document.querySelector(".modalBtn").addEventListener("click",event=>{
+        const element = event.target;
+        const id2 = Number(element.getAttribute("id"));
+        //modify task status in store
+        store.modifyTaskStatus(id2,"done");
+        //reset the taskmodified flag for table refresh
+        session.taskModified=true;
+        // disable the 'mark as done' button
+        element.setAttribute("disabled","");
+        //toggle off the modal
         taskModalInstance.toggle();
-    });//end event listener for the double click on list of tasks
-}//end initModal()
+    });//end event listener --- for the modal 'mark as done' button
+    //turn on the modal 
+    taskModalInstance.toggle();
+} //end function: event listener handler -- for the double click on list of tasks
+
+const resetTable=()=>{
+    //get table header row
+    const taskTableHead=document.querySelector("#taskTableHead");
+    //delete existing table header
+    //check if task table body contains any rows - if so delete all of them
+    if (taskTableHead!=null){
+        while(taskTableHead.hasChildNodes()) 
+            taskTableHead.removeChild(taskTableHead.firstChild);
+    }
+    //add the appropriate content to the table head
+    const taskTblHdRw=document.createElement("TR");
+    //prepare the th row
+    const taskTblHdCnt = store.getTaskHeaders().map(ele=>`<th> ${ele} </th>`).join(' ');
+    //display
+    taskTblHdRw.insertAdjacentHTML("afterbegin",taskTblHdCnt);
+    taskTableHead.appendChild(taskTblHdRw);
+}
 
 /* custom code for date check: 
     //check value of date field if it is blank or in the past - raise error

@@ -1,12 +1,12 @@
 <!-- 
     JWD Web Developer Program 
     Project: Final Project
-    Sprint: 1
-    Task: 3
+    Sprint: 4
+    Task: 9
     Author: Vineet W. Singh & Radhika Kothamasu
     Reviewed by: VWS
     Start Date: 01/12/2020
-    Date of last edit: 21/12/2020
+    Date of last edit: 13/1/2121
     Date of last review: 
 -->
 
@@ -46,9 +46,31 @@
 
     <!-- Other elements start here-->
     <main>
-        <section id="tasks">
+        <section id="taskManager">
             <div class="container-fluid">
                 <div class="row row-head">
+                    <div class="col-12 d-flex justify-content-center">
+                        <h3>Manage Tasks</h3>
+                    </div>
+                </div>
+                <div class="row d-flex align-items-center">
+                    <div class="d-none d-md-block col-md-1"></div>
+                    <div class="col-md-10">
+                        <div class="row">
+                            <div class="col-md-6 d-flex justify-content-center">
+                                <button id="loadTestButton" type="button" class="btn btn-primary">Load Test Data</button>
+                            </div>
+                            <div class="col-md-6 d-flex justify-content-center">
+                                <button id="deleteTasksButton" type="button" class="btn btn-danger" disabled>Delete All Tasks</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-none d-md-block col-md-1"></div>
+                </div>
+        </section>
+        <section id="tasks">
+            <div class="container-fluid">
+                <div class="row">
                     <div class="col-12 d-flex justify-content-center">
                         <h3> List of Tasks</h3>
                     </div>
@@ -56,7 +78,12 @@
                 <div class="row">
                     <div class="d-none d-md-block col-md-1"></div>
                     <div class="col-md-10">
-                        <div class="row d-flex justify-content-center" id="cardRow">
+                        <div id="noTaskRow" class="row d-flex"> 
+                            <div class="col-12 d-flex justify-content-center">
+                                <p>NO TASKS TO DISPLAY</p>
+                            </div>
+                        </div>
+                        <div id="cardRow" class="row d-none d-flex justify-content-center" >
                         </div>
                     </div>
                     <div class="d-none d-md-block col-md-1"></div>
