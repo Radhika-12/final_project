@@ -1,18 +1,18 @@
 /* 
     JWD Web Developer Program 
     Project: Final Project
-    Sprint: 4
+    Sprint: 3
     Task: 9
     Author: Vineet W. Singh 
     Start Date: 16/12/2020
-    Date of last edit: 13/1/21
+    Date of last edit: 15/1/21
     Date of last review:
 */
 
 //class definition of Task
 class Task {
-    constructor(projectName, taskName, desc, assignee, status, dueDate){
-        this._id = 0;
+    constructor(id,projectName, taskName, desc, assignee, status, dueDate){
+        this._id = id;
         this._projectName=projectName;
         this._taskName=taskName;
         this._desc=desc;
@@ -71,8 +71,6 @@ class Task {
 // Taskmanager is the class used to store the taskList array
 class TaskManager{ 
     constructor(){
-            // last Id 
-            this._lastId=0;
             // array of tasks
             this._taskList=[];
     }
@@ -82,12 +80,30 @@ class TaskManager{
         return(this._taskList);
     }
 
+    //return the latest id in the series 
+    getLatestId(){
+        const lastId=localStorage.getItem('id');
+        if (lastId!=null) {
+            //id found add 1 to it to get the latest id.
+            const latestId=Number(JSON.parse(lastId).id)+1;
+            localStorage.setItem('id',JSON.stringify({id:latestId}));
+            return latestId;
+        }
+        else{
+            //id not found start from 10
+            localStorage.setItem('id',JSON.stringify({id:10}));
+            return 10;
+        }
+    };
+
     //return all task field names
     getTaskHeaders() {return(Task.fieldNames);}
 
     //get a particular task by using it's id
     getTaskById(pId){
-        return(this._taskList[this._taskList.findIndex(ele=>ele.id===pId)]);
+        const index = this._taskList.findIndex(ele=>ele.id===pId);
+        if (index===-1) throw(new Error("not found error"));
+        else return(this._taskList[index]);
     }
 
     //return no of tasks in taskList
@@ -96,39 +112,54 @@ class TaskManager{
     }
 
     //add a new task to the task list
-    addTask(projectName, taskName, desc, assignee, status, dueDate){
-        const vTask = new Task(projectName, taskName, desc, assignee, status, dueDate);
-        vTask.id = this._lastId + 1;
+    addTask(projectName, taskName, desc, assignee, status, dueDate, vId=null){
+        //check data isn't null
+        if (projectName.trim()==="" || taskName.trim()==="" || desc.trim()==="" || status.trim()==="" || dueDate.trim()==="") {
+            throw(new Error("invalid data error"));
+        }
+        // make an id
+        let id = 0;
+        if (vId==null) id = this.getLatestId();
+        else if(vId!=null) id = vId;
+        // get a new task
+        const vTask = new Task(id, projectName, taskName, desc, assignee, status, dueDate);
+        //add to task list
         this._taskList.push(vTask);
-        this._lastId++;
     }
 
     //modify the status in a task
     modifyTaskStatus(pId,pStatus){
+        //get the index of the task in the array with the same id
+        const index = this._taskList.findIndex(ele=>ele.id===pId);
+        if (index===-1) throw(new Error("not found error"));
+        //check if status is not null
+        if (pStatus.trim()==="") throw(new Error("invalid data error"));
         // get the right node
-        const vTask=this._taskList[this._taskList.findIndex(ele=>ele.id===pId)];
+        const vTask=this._taskList[index];
         //modify status by calling setter;
         vTask.status=pStatus;
     }
 
     //delete a task from the list
     deleteTask(pId){
+        //get the index of the task in the array with the same id
+        const index = this._taskList.findIndex(ele=>ele.id===pId);
+        if (index===-1) throw(new Error("not found error"));
         //remove the entry with the given id from the array
-        delete this._taskList[this._taskList.findIndex(ele=>ele.id===pId)];
+        delete this._taskList[index];
         this._taskList=this._taskList.flat();
     }
 
     //delete all stored tasks
     deleteAllTasks(){
         //reinitalise taskList array
-        this._lastId=0;
         this._taskList=[];
-        localStorage.clear();
+        const taskListJSON=JSON.stringify(this._taskList);
+        localStorage.setItem('tasks', taskListJSON);
     }
     
     //store to local storage
     persistData(){
-        localStorage.clear();
         const taskListJSON=JSON.stringify(this._taskList);
         localStorage.setItem('tasks', taskListJSON);
     }
@@ -137,15 +168,13 @@ class TaskManager{
     restoreData(type){
         try{ 
             if (type==="localStorage"){
-                this._lastId=0;
                 this._taskList=[];
                 let tasks=localStorage.getItem('tasks');
                 if(tasks!=null){
-                    console.log(tasks);
                     //load data into local list of tasks
                     const taskList=JSON.parse(tasks);
                     taskList.forEach(ele=>{
-                            if (ele!=null) this.addTask(ele["Project"], ele["Task"],ele["Desc"],ele["Assignee"],ele["Status"],ele["Due"]);
+                            if (ele!=null) this.addTask(ele["Project"], ele["Task"],ele["Desc"],ele["Assignee"],ele["Status"],ele["Due"],ele["ID"]);
                         }
                     );
                 }
@@ -194,7 +223,7 @@ class TaskManager{
                     "Due":"2020-12-18"
                     }
                 ];
-                data.forEach(ele=>this.addTask(ele["Project"], ele["Task"],ele["Desc"],ele["Assignee"],ele["Status"],ele["Due"]));
+                data.forEach(ele=>this.addTask(ele["Project"], ele["Task"],ele["Desc"],ele["Assignee"],ele["Status"],ele["Due"],ele["ID"]));
                 //this.persistData();
             }
             else {
@@ -208,7 +237,6 @@ class TaskManager{
     }
 }
 
-
-
+module.exports = TaskManager;
 
 

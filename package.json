@@ -1,0 +1,23 @@
+{
+  "name": "final_project",
+  "version": "1.0.0",
+  "description": "A project for the junior web developer program",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --require mock-local-storage ./assets/js/taskManager.test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Vulcan-Logic/final_project.git"
+  },
+  "author": "Vineet W. Singh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Vulcan-Logic/final_project/issues"
+  },
+  "homepage": "https://github.com/Vulcan-Logic/final_project#readme",
+  "devDependencies": {
+    "mocha": "^8.2.1",
+    "mock-local-storage": "^1.1.15"
+  }
+}
