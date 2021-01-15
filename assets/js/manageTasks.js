@@ -34,11 +34,9 @@ function main() {
     renderCards();
     
     document.querySelector("#loadTestButton").addEventListener('click',()=>{
-        if (window.confirm("Loading test data will delete existing tasks. Continue?")){
-            store.deleteAllTasks();
-            store.restoreData("testData");
-            renderCards();
-        }
+        store.deleteAllTasks();
+        store.restoreData("testData");
+        renderCards();
     });
 
     document.querySelector("#deleteTasksButton").addEventListener('click',()=>{

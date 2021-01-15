@@ -224,7 +224,7 @@ class TaskManager{
                     }
                 ];
                 data.forEach(ele=>this.addTask(ele["Project"], ele["Task"],ele["Desc"],ele["Assignee"],ele["Status"],ele["Due"],ele["ID"]));
-                //this.persistData();
+                this.persistData();
             }
             else {
                 throw("Unrecognised option used in calling restoreData function");
