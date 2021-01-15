@@ -188,24 +188,39 @@ function tableClickHandler(event){
         const modalContHeader = 
         `<!-- Modal Header -->
         <div class="modal-header">
-            <h4 class="modal-title">Modify Task</h4>
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="w-100 modal-title text-center">Mark Task</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="close">&times;</button>
         </div>`;
         const modalContFooter = 
         `<!-- Modal Footer -->
         <div class="modal-footer">
-            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-danger" data-dismiss="modal" aria-label="close">Close</button>
         </div>`;
         const preButtonBody=`<!-- Modal Body -->
         <div class="modal-body">
-            <div>
-                <h4> Task ID: ${cTask.id} </h4>
-                <hr/>
-                <p> <strong>Task: </strong> ${cTask.taskName} </p>
-                <p> <strong>Assigned to: </strong>${cTask.assignee} </p>
-                <p> <strong>Status: </strong>${cTask.status} </p>`;
-        const postButtonBody=`<hr /> 
-                <p> To modify status or delete the task go to the Manage Tasks Page </p> 
+            <div class="row d-flex align-items-center">
+                <div class="col-12 d-flex justify-content-center">
+                    <h5 class="text-center"> Task ID: ${cTask.id} </h5>
+                </div>
+            </div>
+            <hr/>
+            <div class="row d-flex align-items-center">
+                <div class="col-12 d-flex">
+                    <p><strong>Task: </strong> ${cTask.taskName} <br/>
+                    <strong>Assigned to: </strong>${cTask.assignee}  <br/>
+                    <strong>Status: </strong>${cTask.status} </p> 
+                </div>
+            </div>
+            <div class="row d-flex align-items-center">
+                <div class="col-12 d-flex justify-content-center">`;
+        const postButtonBody=`
+                </div> 
+            </div>
+            <hr/>
+            <div class="row d-flex align-items-center">
+                <div class="col-12 d-flex justify-content-center">
+                    <p> To modify or delete a task go to <a href="manageTasks.html"> Manage Tasks Page </a> </p> 
+                </div>
             </div>
         </div>`;
         const modalContBody = cTask.status!=="done" ? 
