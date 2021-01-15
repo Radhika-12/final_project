@@ -249,7 +249,13 @@ const resetTable=()=>{
     //add the appropriate content to the table head
     const taskTblHdRw=document.createElement("TR");
     //prepare the th row
-    const taskTblHdCnt = store.getTaskHeaders().map(ele=>`<th> ${ele} </th>`).join(' ');
+    const taskTblHdCnt = store.getTaskHeaders().map(ele=>{
+        let fieldName;
+        if (ele==="Desc") fieldName="Description";
+        else if(ele==="Due") fieldName="Due Date";
+        else fieldName=ele; 
+        return(`<th> ${fieldName} </th>`);
+    }).join(' ');
     //display
     taskTblHdRw.insertAdjacentHTML("afterbegin",taskTblHdCnt);
     taskTableHead.appendChild(taskTblHdRw);

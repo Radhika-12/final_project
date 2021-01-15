@@ -5,66 +5,90 @@
     Task: 6
     Author: Vineet W. Singh 
     Start Date: 30/11/2020
-    Date of last edit: 17/12/2020
+    Date of last edit: 15/1/21
     Date of last review:
 */
 
 body {
-    background-color: rgb(242, 247, 247);
+    background-color: rgb(240, 245, 245);
 }
 
 main {
     height: 100%;
+   
 }
+
+.navbar {
+    background-color: rgb(20, 145, 145) !important;
+}
+
+.nav-item.active {
+    text-decoration: underline;
+}
+
+table{
+    border: 1px solid black !important;
+}
+
+thead { 
+    position: sticky; 
+    top: 0; 
+    background-color: rgb(20, 145, 145) !important;
+}
+
+th { 
+    position: sticky; 
+    top: 0; 
+} 
+
+h3,h4{
+    text-decoration: underline;
+}
+
+form {
+    border: 1px solid darkgrey;
+    border-radius: 5px;
+    padding: 1rem ;
+    margin-bottom: 1rempx;
+}
+
+a.nav-link:hover{
+    text-decoration: underline;
+}
+
+#tasks {
+    margin: 0 2rem 2rem 1rem;
+    border: 1px solid darkgrey;
+    border-radius: 5px;
+    padding: 1rem;
+}
+
+#headRow {
+    margin-top:4rem;
+}
+
+#taskTbCol{
+    margin:1rem;
+    border: 1px solid darkgrey;
+    border-radius: 5px;
+}
+
+#taskTbDiv{
+    height:80%;
+}
+
 
 .row-top {
     height: 100%;
 }
 
-.row-head {
-    margin-top: 70px;
-}
-
-.button {
-    background-color: rgb(40, 40, 43);
-    border-radius: 5px;
-    color: #ffff;
-    padding: .5rem;
-    text-decoration: none;
-    margin: 1.5rem;
-}
-
-.button:focus,
-.button:hover {
+.btn:focus,
+.btn:hover {
     background-color: rgb(112, 112, 116);
-    color: #ffff;
 }
 
 .table-hover tbody tr:hover td{
-    background-color: aqua;
-}
-
-
-/* comment out VWS 
-  .aligncentre {
-    width: 150px;
-    height: 100px;
-    /* Center vertically and horizontally 
-    position: absolute;
-    top: 50%;
-    left: 50%;
-  }
-  .content {
-    display: none;
-    margin: 1em 0;
-  }*/
-
-form {
-    margin-top: 4rem;
-    border: 1px solid darkgrey;
-    border-radius: 5px;
-    padding: 1rempx;
-    margin-bottom: 1rempx;
+    background-color: aquamarine;
 }
 
 .scrl-y {
@@ -83,14 +107,19 @@ form {
     margin-bottom: 1rem;
 }
 
-#taskTbCol{
-    margin:1rem;
-    border: 1px solid darkgrey;
-}
-
-#taskTbDiv{
-    height:80%;
-}
+/* comment out VWS 
+  .aligncentre {
+    width: 150px;
+    height: 100px;
+    /* Center vertically and horizontally 
+    position: absolute;
+    top: 50%;
+    left: 50%;
+  }
+  .content {
+    display: none;
+    margin: 1em 0;
+  }*/
 
 /* scroll bar example 
 .my-custom-scrollbar {
