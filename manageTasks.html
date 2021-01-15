@@ -32,14 +32,12 @@
                 <li class="nav-item">
                     <a class="nav-link" href="index.html">Home</a>
                 </li>
-
                 <li class="nav-item">
                     <a class="nav-link" href="addTask.html">Add Task</a>
                 </li>
                 <li class="nav-item active">
                     <a class="nav-link" href="#">Manage Task <span class="sr-only">current</span></a>
                 </li>
-
             </ul>
         </div>
     </nav>
@@ -52,20 +50,6 @@
                     <div class="col-12 d-flex justify-content-center">
                         <h3>Manage Tasks</h3>
                     </div>
-                </div>
-                <div class="row d-flex align-items-center">
-                    <div class="d-none d-md-block col-md-1"></div>
-                    <div class="col-md-10">
-                        <div class="row">
-                            <div class="col-md-6 d-flex justify-content-center">
-                                <button id="loadTestButton" type="button" class="btn btn-primary">Load Test Data</button>
-                            </div>
-                            <div class="col-md-6 d-flex justify-content-center">
-                                <button id="deleteTasksButton" type="button" class="btn btn-danger" disabled>Delete All Tasks</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="d-none d-md-block col-md-1"></div>
                 </div>
         </section>
         <section id="tasks">
@@ -88,6 +72,24 @@
                     </div>
                     <div class="d-none d-md-block col-md-1"></div>
                 </div>
+        </section>
+        <section>
+            <div class="row d-flex align-items-center">
+                <div class="d-none d-md-block col-md-1"></div>
+                <div class="col-md-10">
+                    <div class="row" class ="d-none" id="loadTestButtonRow">
+                        <div class="col-12 d-flex justify-content-center">
+                            <button id="loadTestButton" type="button" class="d-none btn btn-primary">Load Test Data</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 d-flex justify-content-center">
+                            <button id="deleteTasksButton" type="button" class="btn btn-danger" disabled>Delete All Tasks</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-none d-md-block col-md-1"></div>
+            </div>
         </section>
     </main>
 

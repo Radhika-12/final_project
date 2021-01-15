@@ -16,7 +16,6 @@ const store = new TaskManager();
 store.restoreData("localStorage");
 const session={};
 session.noTasks=store.getNoOfTasks();
-session.taskModified=false;
 
  //set up eventlistener
     
@@ -38,13 +37,14 @@ function main() {
         if (window.confirm("Loading test data will delete existing tasks. Continue?")){
             store.deleteAllTasks();
             store.restoreData("testData");
-            session.taskModified=true;
+            renderCards();
         }
     });
 
     document.querySelector("#deleteTasksButton").addEventListener('click',()=>{
         if (window.confirm("Do you really want to Delete all tasks?")){
             store.deleteAllTasks();
+            renderCards();
         }
     });
 } 
@@ -222,7 +222,14 @@ function renderCards() {
             cardRow.classList.remove("d-none");
             cardRow.classList.add("d-flex");
         }
+        //enable delete tasks button
         document.querySelector("#deleteTasksButton").removeAttribute("disabled");
+        //disbale load tasks button
+        if (isVisible(document.querySelector("#loadTestButtonRow"))){
+            document.querySelector("#loadTestButtonRow").classList.add("d-none");
+            document.querySelector("#loadTestButton").classList.add("d-none");
+        }
+        
     }
     else {
         const cardRow=document.querySelector("#cardRow");
@@ -234,6 +241,10 @@ function renderCards() {
             noTaskRow.classList.remove("d-none");
             noTaskRow.classList.add("d-flex");
         }
+        //enable load tasks button
+        document.querySelector("#loadTestButtonRow").classList.remove("d-none");
+        document.querySelector("#loadTestButton").classList.remove("d-none");
+        //disable delete tasks button
         document.querySelector("#deleteTasksButton").setAttribute("disabled","");
     }
 }
