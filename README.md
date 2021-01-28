@@ -100,8 +100,9 @@ The list and modal on the 'Add Task' page are generated dynamically by the javas
 
 ### Testing 
 Certain aspects of the application (TaskManager class and methods) can be tested by using the 'npm test' command. 
-A screen shot of test results follows:
-![Test Results] (./test-results.png)
+A screen shot of test results follows.
+Image: ![Test Results] ('./test-results.png')
+
 
 
 
