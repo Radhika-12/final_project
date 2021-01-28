@@ -4,7 +4,8 @@ Team upto Sprint 2 Task 3: Radhika & Vineet.
 Team after Task 4: Vineet.
 
 ## Link
-The application can be accessed at: [JWD Cohort 3 Final Project by Vineet] (https://vulcan-logic.github.io/final_project/)
+The application can be accessed at:  
+[JWD Cohort 3 Final Project by Vineet](https://vulcan-logic.github.io/final_project/)
 
 ### Description 
 A project to implement task management (creation, tracking, updation & deletion). 
