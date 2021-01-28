@@ -5,7 +5,7 @@
     Task: 9
     Author: Vineet W. Singh 
     Start Date: 10/12/2020
-    Date of last edit: 13/1/2021
+    Date of last edit: 28/1/21
     Date of last review:
 */
 
@@ -14,14 +14,15 @@ const store = new TaskManager();
 const session={};
 store.restoreData("localStorage");
 session.taskModified=false;
+let taskModalInstance=null;
 
-//windwo event listeners
+//window event listeners
 // when window loses focus - store data 
 window.addEventListener('blur',(ev)=>{
     store.persistData();
 });
 
-//when window gains focus - restore data from local storage & do status check
+//when window gains focus - restore data from local storage & refresh
 window.addEventListener('focus',(ev)=>{
     store.restoreData("localStorage");
     renderTask();
@@ -37,18 +38,27 @@ function main(){
     const cMnth=cDt.getMonth()+1;
     const cMonth=cMnth<10?"0"+cMnth.toString():cMnth.toString();
     const cDate=`${cDt.getFullYear()}-${cMonth}-${cDt.getDate()}`;
-
+    // make a constant with modal contents
+    // initialize on a <div class="modal"> with all options
+    // Note: options object is optional
+    taskModalInstance = new BSN.Modal(
+        // target selector
+        '#taskModal', 
+        // options object
+        { 
+        content: "", // sets modal content
+        backdrop: 'static', // we don't want to dismiss Modal when Modal or backdrop is the click event target
+        keyboard: false // we don't want to dismiss Modal on pressing Esc key
+        }
+    ); //end taskModalInstance
     //get form
      const form = document.getElementById("taskForm");
-
      //set date attributes
     const dateFld =  document.querySelector("#dDate");
     dateFld.setAttribute("value",cDate);
     dateFld.setAttribute("min", cDate);
-
     //render task table
     renderTask();
-
     //add event listeners, submit & reset
     form.addEventListener('submit', event => {
         event.preventDefault();
@@ -74,8 +84,6 @@ function main(){
         form.classList.remove("was-validated");
         form.reset();
     });
-
-
 }
 
 /* check if an element is visible on a page */
@@ -88,8 +96,8 @@ function isVisible (ele) {
     style.visibility!== 'hidden');
 }
 
- //check status of tasks - if changed renderTasks afresh
- function statusCheck() {
+//check status of tasks - if changed renderTasks afresh
+function statusCheck() {
     //check if any of the two pages have modified the task in any form 
     //get from localStorage status of pages: 
     if (session.taskModified){
@@ -138,7 +146,8 @@ function renderTask(){
                 document.querySelector("#taskTable").classList.remove("d-none");
             }
         });
-    initModal();
+    //removed -- initModal();
+    document.querySelector("#taskTable").addEventListener("click",tableClickHandler);
     }
     // no of tasks in tasklist is 0
     else if (isVisible(document.querySelector("#taskTable"))){
@@ -146,94 +155,12 @@ function renderTask(){
             document.querySelector("#taskTable").classList.add("d-none");
         }
 }
-
-// function to initialise a modal which will allow a task to be modified
-const initModal=()=>{
-    //check if modal body exists - if so delete it 
-    if (document.querySelector(".modal-header")!=null){
-        const modalBody = document.querySelector(".modal-header").parentElement;
-        modalBody.removeChild(document.querySelector(".modal-header"));
-        modalBody.removeChild(document.querySelector(".modal-body"));
-        modalBody.removeChild(document.querySelector(".modal-footer"));
-        document.querySelector("#taskTable").removeEventListener("click",tableClickHandler);
-    }
-     // add an event listener for double clicks on the list of tasks
-     document.querySelector("#taskTable").addEventListener("click",tableClickHandler);
-}//end initModal()
      
-    //function: handler for double click events on the table row
+//function: handler for double click events on the table row
 function tableClickHandler(event){     
     const element = event.target.closest('.taskTableRow'); 
     const id = Number(element.getAttribute("id"));
-
-    // make a constant with modal contents
-    //const modalCont=modalContHeader+modalContBody+modalContFooter;
-    // initialize on a <div class="modal"> with all options
-    // Note: options object is optional
-    const taskModalInstance = new BSN.Modal(
-        // target selector
-        '#taskModal', 
-        // options object
-        { 
-        content: "", // sets modal content
-        backdrop: 'static', // we don't want to dismiss Modal when Modal or backdrop is the click event target
-        keyboard: false // we don't want to dismiss Modal on pressing Esc key
-        }
-    ); //end taskModalInstance
-
-    //sub-function: update modal body with task details and set up a "mark as done" button
-    const updateModalBody = id => {
-        const cTask = store.getTaskById(id);
-        //variables and constants used for modal 
-        const modalContHeader = 
-        `<!-- Modal Header -->
-        <div class="modal-header">
-            <h4 class="w-100 modal-title text-center">Mark Task</h4>
-            <button type="button" class="close" data-dismiss="modal" aria-label="close">&times;</button>
-        </div>`;
-        const modalContFooter = 
-        `<!-- Modal Footer -->
-        <div class="modal-footer">
-            <button type="button" class="btn btn-danger" data-dismiss="modal" aria-label="close">Close</button>
-        </div>`;
-        const preButtonBody=`<!-- Modal Body -->
-        <div class="modal-body">
-            <div class="row d-flex align-items-center">
-                <div class="col-12 d-flex justify-content-center">
-                    <h5 class="text-center"> Task ID: ${cTask.id} </h5>
-                </div>
-            </div>
-            <hr/>
-            <div class="row d-flex align-items-center">
-                <div class="col-12 d-flex">
-                    <p><strong>Task: </strong> ${cTask.taskName} <br/>
-                    <strong>Assigned to: </strong>${cTask.assignee}  <br/>
-                    <strong>Status: </strong>${cTask.status} </p> 
-                </div>
-            </div>
-            <div class="row d-flex align-items-center">
-                <div class="col-12 d-flex justify-content-center">`;
-        const postButtonBody=`
-                </div> 
-            </div>
-            <hr/>
-            <div class="row d-flex align-items-center">
-                <div class="col-12 d-flex justify-content-center">
-                    <p> To modify or delete a task go to <a href="manageTasks.html"> Manage Tasks Page </a> </p> 
-                </div>
-            </div>
-        </div>`;
-        const modalContBody = cTask.status!=="done" ? 
-                preButtonBody
-                + `<button type='button' class='btn btn-primary modalBtn' id='${cTask.id}'> Mark as Done </button>`
-                + postButtonBody :
-                preButtonBody 
-                + `<button type='button' class='btn btn-primary modalBtn d-none' id='${cTask.id}'> Mark as Done </button>`
-                + postButtonBody ;
-        const modalCont=modalContHeader+modalContBody+modalContFooter;
-        taskModalInstance.setContent(modalCont);
-    }; //end sub-function --- updateModalBody 
-
+    //update modal body with task details
     updateModalBody(id);
     //add an event listener -- for the modal 'mark as done' button
     document.querySelector(".modalBtn").addEventListener("click",event=>{
@@ -244,13 +171,66 @@ function tableClickHandler(event){
         //reset the taskmodified flag for table refresh
         session.taskModified=true;
         // disable the 'mark as done' button
-        element.setAttribute("disabled","");
+        element.classList.add("d-none");
         //toggle off the modal
-        taskModalInstance.toggle();
+        taskModalInstance.update();
     });//end event listener --- for the modal 'mark as done' button
     //turn on the modal 
     taskModalInstance.toggle();
 } //end function: event listener handler -- for the double click on list of tasks
+
+// update modal body with task details and set up a "mark as done" button
+const updateModalBody = id => {
+    const cTask = store.getTaskById(id);
+    //variables and constants used for modal 
+    const modalContHeader = 
+    `<!-- Modal Header -->
+    <div class="modal-header">
+        <h4 class="w-100 modal-title text-center">Mark Task</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="close">&times;</button>
+    </div>`;
+    const modalContFooter = 
+    `<!-- Modal Footer -->
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal" aria-label="close">Close</button>
+    </div>`;
+    const preButtonBody=`<!-- Modal Body -->
+    <div class="modal-body">
+        <div class="row d-flex align-items-center">
+            <div class="col-12 d-flex justify-content-center">
+                <h5 class="text-center"> Task ID: ${cTask.id} </h5>
+            </div>
+        </div>
+        <hr/>
+        <div class="row d-flex align-items-center">
+            <div class="col-12 d-flex">
+                <p><strong>Task: </strong> ${cTask.taskName} <br/>
+                <strong>Assigned to: </strong>${cTask.assignee}  <br/>
+                <strong>Status: </strong>${cTask.status} </p> 
+            </div>
+        </div>
+        <div class="row d-flex align-items-center">
+            <div class="col-12 d-flex justify-content-center">`;
+    const postButtonBody=`
+            </div> 
+        </div>
+        <hr/>
+        <div class="row d-flex align-items-center">
+            <div class="col-12 d-flex justify-content-center">
+                <p> To modify or delete a task go to <a href="manageTasks.html"> Manage Tasks Page </a> </p> 
+            </div>
+        </div>
+    </div>`;
+    const modalContBody = cTask.status!=="done" ? 
+            preButtonBody
+            + `<button type='button' class='btn btn-primary modalBtn' id='${cTask.id}'> Mark as Done </button>`
+            + postButtonBody :
+            preButtonBody 
+            + `<button type='button' class='btn btn-primary modalBtn d-none' id='${cTask.id}'> Mark as Done </button>`
+            + postButtonBody ;
+    const modalCont=modalContHeader+modalContBody+modalContFooter;
+    taskModalInstance.setContent(modalCont);
+}; //end sub-function --- updateModalBody 
 
 const resetTable=()=>{
     //get table header row
@@ -291,4 +271,20 @@ const resetTable=()=>{
             document.getElementById("invalidDateMsg").classList.add("d-block");
         }
     }
-*/ 
+
+redundant --
+// function to initialise a modal which will allow a task to be modified
+const initModal=()=>{
+    //check if modal body exists - if so delete it 
+    if (document.querySelector(".modal-header")!=null){
+        const modalBody = document.querySelector(".modal-header").parentElement;
+        modalBody.removeChild(document.querySelector(".modal-header"));
+        modalBody.removeChild(document.querySelector(".modal-body"));
+        modalBody.removeChild(document.querySelector(".modal-footer"));
+        document.querySelector("#taskTable").removeEventListener("click",tableClickHandler);
+    }
+     // add an event listener for double clicks on the list of tasks
+     document.querySelector("#taskTable").addEventListener("click",tableClickHandler);
+}//end initModal()
+
+*/
