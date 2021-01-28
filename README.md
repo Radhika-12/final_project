@@ -29,79 +29,79 @@ CSS 3,
 Bootstrap 4. 
 Javascript ES6. 
 * Javascript Libraries. 
-+ Bootstrap Native JavaScript. 
-+ Mocha. 
-+ Mock-local-storage. 
+  + Bootstrap Native JavaScript. 
+  + Mocha. 
+  + Mock-local-storage. 
 Node Package Manager.
 
 **Bootstrap**
 * CSS Classes by Bootstrap (in no particular order)
-+ navbar
-+ navbar-expand-lg
-+ navbar-light
-+ bg-info
-+ fixed-top
-+ navbar-brand
-+ navbar-toggler
-+ navbar-toggler-icon
-+ collapse
-+ navbar-collapse
-+ navbar-nav
-+ nav-item
-+ nav-link
-+ row 
-+ align-items-center 
-+ justify-contents-center
-+ btn
-+ btn-primary
-+ btn-danger
-+ btn-warning
-+ col-12
-+ d-md-block 
-+ col-md-1
-+ col-md-4
-+ col-md-6 
-+ col-md-10
-+ col-sm-4
-+ col-sm-8
-+ d-none
-+ d-flex 
-+ text-center
-+ modal
-+ modal-fade
-+ modal-dialog
-+ modal-content
-+ modal-header
-+ modal-body
-+ modal-footer
-+ form-group 
-+ form-inline
-+ form-control
-+ invalid-feedback
-+ table-responsive 
-+ scrl-y
-+ table 
-+ table-striped 
-+ table-bordered 
-+ table-hover
-+ container-fluid
-+ card
-+ card-body
-+ card-title
+  + navbar
+  + navbar-expand-lg
+  + navbar-light
+  + bg-info
+  + fixed-top
+  + navbar-brand
+  + navbar-toggler
+  + navbar-toggler-icon
+  + collapse
+  + navbar-collapse
+  + navbar-nav
+  + nav-item
+  + nav-link
+  + row 
+  + align-items-center 
+  + justify-contents-center
+  + btn
+  + btn-primary
+  + btn-danger
+  + btn-warning
+  + col-12
+  + d-md-block 
+  + col-md-1
+  + col-md-4
+  + col-md-6 
+  + col-md-10
+  + col-sm-4
+  + col-sm-8
+  + d-none
+  + d-flex 
+  + text-center
+  + modal
+  + modal-fade
+  + modal-dialog
+  + modal-content
+  + modal-header
+  + modal-body
+  + modal-footer
+  + form-group 
+  + form-inline
+  + form-control
+  + invalid-feedback
+  + table-responsive 
+  + scrl-y
+  + table 
+  + table-striped 
+  + table-bordered 
+  + table-hover
+  + container-fluid
+  + card
+  + card-body
+  + card-title
 
 * Javascript functions on events
-+ window > blur
-+ window > focus
-+ list > click
-+ button > click
-+ card > change
+  + window > blur
+  + window > focus
+  + list > click
+  + button > click
+  + card > change
 
 The list and modal on the 'Add Task' page are generated dynamically by the javascript as are the cards on the 'Manage Tasks' page. 
 
 ### Testing 
 Certain aspects of the application (TaskManager class and methods) can be tested by using the 'npm test' command. 
 A screen shot of test results follows.
-Image: ![Test Results] ('./test-results.png')
+![]('./test-results.png')
 
 
 
